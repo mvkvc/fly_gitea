@@ -1,2 +1,1 @@
-# gitea_on_fly
-
+# fly_gitea
