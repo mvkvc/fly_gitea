@@ -13,7 +13,7 @@ processes = []
   GITEA__server__ROOT_URL="https://git.cloudloom.dev"
   GITEA__security__INSTALL_LOCK="true" # Don't show installer
   GITEA__service__DISABLE_REGISTRATION="true" # TODO: uncomment once you have created your first user
-  GITEA_CUSTOM ="/data/gitea/custom/"
+  GITEA_CUSTOM ="/app/custom/"
 
 [[mounts]]
   destination = "/data"
