@@ -1,6 +1,6 @@
-# fly.toml file generated for mvkvc-gitea-on-fly on 2022-09-20T16:53:32-04:00
+# fly.toml file generated for fly-gitea on 2022-10-20T20:57:50-04:00
 
-app = "mvkvc-gitea-on-fly"
+app = "fly-gitea"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
@@ -8,39 +8,33 @@ processes = []
 [build]
   image = "gitea/gitea:latest"
 
-# [deploy]
-  # release_command = "cp "
-
-
 [env]
-  GITEA__database__DB_TYPE = "sqlite3"
-  GITEA__database__PATH = "/data/gitea/gitea.db"
-  GITEA__server__DOMAIN = "mvkvc-gitea-on-fly.fly.dev"
-  GITEA__server__SSH_DOMAIN = "mvkvc-gitea-on-fly.fly.dev"
-  GITEA__server__ROOT_URL = "https://mvkvc-gitea-on-fly.fly.dev"
-  GITEA__security__INSTALL_LOCK = "true"
-  # GITEA__service__DISABLE_REGISTRATION="true" # TODO: uncomment once you have created your first user
+  GITEA__database__DB_TYPE="sqlite3"
+  GITEA__database__PATH="/data/gitea/gitea.db"
+  GITEA__server__DOMAIN="fly-gitea.fly.dev"
+  GITEA__server__SSH_DOMAIN="fly-gitea.fly.dev"
+  GITEA__server__ROOT_URL="https://fly-gitea.fly.dev"
+  GITEA__security__INSTALL_LOCK="true" # Don't show installer
+  GITEA__service__DISABLE_REGISTRATION="true" # TODO: uncomment once you have created your first user
 
 [[mounts]]
   destination = "/data"
-  source = "gitea_data"
+  source = "fly_gitea_data"
 
-[[services]]
-  internal_port = 22
-  protocol = "tcp"
-
-  [[services.ports]]
-    port = 22
-
+# https traffic
 [[services]]
   internal_port = 3000
   protocol = "tcp"
 
   [[services.ports]]
-    force_https = true
     handlers = ["http"]
+    force_https = true
     port = 80
 
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
