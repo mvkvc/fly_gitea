@@ -101,7 +101,7 @@ kill_timeout = 5
 [[services]]
   internal_port = 3000
   protocol = "tcp"
-  
+
   [[services.ports]]
     handlers = ["http"]
     force_https = true
@@ -141,4 +141,3 @@ SoEBeS <https://soebes.io/>, Allspice <https://www.allspice.io/>, Towhee
 backers on Open Collective <https://opencollective.com/gitea>.
 
 <https://blog.gitea.io/en-us>
-
