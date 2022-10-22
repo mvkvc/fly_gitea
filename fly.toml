@@ -1,4 +1,4 @@
-# fly.toml file generated for fly-gitea on 2022-10-20T20:57:50-04:00
+# fly.toml file generated for fly-gitea on 2022-10-22T09:35:47-04:00
 
 app = "fly-gitea"
 kill_signal = "SIGINT"
@@ -6,33 +6,35 @@ kill_timeout = 5
 processes = []
 
 [env]
-  GITEA__database__DB_TYPE="sqlite3"
-  GITEA__database__PATH="/data/gitea/gitea.db"
-  GITEA__server__DOMAIN="git.cloudloom.dev"
-  GITEA__server__SSH_DOMAIN="git.cloudloom.dev"
-  GITEA__server__ROOT_URL="https://git.cloudloom.dev"
-  GITEA__security__INSTALL_LOCK="true" # Don't show installer
-  GITEA__service__DISABLE_REGISTRATION="true" # TODO: uncomment once you have created your first user
-  GITEA_CUSTOM ="/app/custom/"
+  GITEA_CUSTOM = "/app/custom/"
+  GITEA__database__DB_TYPE = "postgres"
+  GITEA__database__HOST = "fly-gitea-db.internal:5432"
+  GITEA__database__NAME = "gitea"
+  GITEA__database__PASSWD = "BZHtUjhXrAUdrBT"
+  GITEA__database__USER = "postgres"
+  GITEA__security__INSTALL_LOCK = "true"
+  GITEA__server__DOMAIN = "git.cloudloom.dev"
+  GITEA__server__ROOT_URL = "https://git.cloudloom.dev"
+  GITEA__server__SSH_DOMAIN = "git.cloudloom.dev"
+  GITEA__service__DISABLE_REGISTRATION = "true"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
 
 [[mounts]]
   destination = "/data"
   source = "fly_gitea_data"
 
-# https traffic
 [[services]]
   internal_port = 3000
   protocol = "tcp"
 
   [[services.ports]]
-    handlers = ["http"]
     force_https = true
+    handlers = ["http"]
     port = 80
 
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
-
-[experimental]
-  allowed_public_ports = []
-  auto_rollback = true
