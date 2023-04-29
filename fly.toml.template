@@ -26,19 +26,29 @@ processes = []
   allowed_public_ports = []
   auto_rollback = true
 
+# persist data
 [[mounts]]
   destination = "/data"
-  source = "fly_gitea_data"
+  source = "gitea_data"
 
+# ssh traffic
+[[services]]
+  internal_port = 22
+  protocol = "tcp"
+  [[services.ports]]
+    port = 22
+
+# https traffic
 [[services]]
   internal_port = 3000
   protocol = "tcp"
 
   [[services.ports]]
-    force_https = true
     handlers = ["http"]
+    force_https = true
     port = 80
 
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
+

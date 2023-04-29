@@ -1,3 +1,2 @@
 # flyctl launch added from .gitignore
-**/.history
-fly.toml
+/.history/
